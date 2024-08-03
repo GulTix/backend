@@ -2,6 +2,7 @@ package app
 
 import (
 	_ "backend/docs"
+	"backend/pkg/migrations"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 
@@ -19,12 +20,13 @@ func NewServer(handlers *handler.Handlers) *Server {
 }
 
 func (s *Server) InitRouteAndServe() {
-
 	mux := http.NewServeMux()
 
 	mux.Handle("/docs/*", httpSwagger.Handler())
 
 	mux.Handle("/api", router.InitRouter(s.handler))
+
+	migrations.Migrate()
 
 	port := os.Getenv("PORT")
 
