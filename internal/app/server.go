@@ -1,6 +1,10 @@
 package app
 
 import (
+	_ "backend/docs"
+
+	httpSwagger "github.com/swaggo/http-swagger"
+
 	"backend/internal/handler"
 	"backend/internal/router"
 	"log"
@@ -17,6 +21,8 @@ func NewServer(handlers *handler.Handlers) *Server {
 func (s *Server) InitRouteAndServe() {
 
 	mux := http.NewServeMux()
+
+	mux.Handle("/docs/*", httpSwagger.Handler())
 
 	mux.Handle("/api", router.InitRouter(s.handler))
 
