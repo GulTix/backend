@@ -13,14 +13,22 @@ type DataTemplate struct {
 	Data    interface{} `json:"data"`
 }
 
-type ErrorMsg struct {
-	Error string `json:"error"`
+type ErrorTemplate struct {
+	Message string `json:"message"`
+	Success bool   `json:"success"`
+	Status  string `json:"status"`
 }
 
-func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, message string, success bool) {
+func setHeader(w http.ResponseWriter) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+
+	return w
+}
+
+func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, message string, success bool) {
+	w = setHeader(w)
 
 	response := DataTemplate{
 		Message: message,
@@ -40,9 +48,7 @@ func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, messag
 }
 
 func SetError(w http.ResponseWriter, httpStatus int, err error) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+	w = setHeader(w)
 
 	response := ErrorMsg{
 		Error: err.Error(),
@@ -59,10 +65,7 @@ func SetError(w http.ResponseWriter, httpStatus int, err error) {
 }
 
 func ReturnInternalServerError(w http.ResponseWriter) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-
+	w = setHeader(w)
 	response := ErrorMsg{
 		Error: "Internal Server Error",
 	}

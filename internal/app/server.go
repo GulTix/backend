@@ -22,11 +22,15 @@ func NewServer(handlers *handler.Handlers) *Server {
 func (s *Server) InitRouteAndServe() {
 	mux := http.NewServeMux()
 
-	mux.Handle("/docs/*", httpSwagger.Handler())
-
-	mux.Handle("/api", router.InitRouter(s.handler))
-
 	migrations.Migrate()
+
+	// mux.HandleFunc("/", s.handler.Auth.ReturnHelloWorld)
+
+	mux.HandleFunc("/test", s.handler.Auth.ReturnHelloWorld)
+
+	mux.Handle("/", router.InitRouter(s.handler))
+
+	mux.Handle("/docs/*", httpSwagger.Handler())
 
 	port := os.Getenv("PORT")
 

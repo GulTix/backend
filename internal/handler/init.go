@@ -1,5 +1,11 @@
 package handler
 
-func NewHandler() *Handlers {
-	return &Handlers{}
+import "backend/internal/handler/auth"
+
+func NewHandler(
+	authHandler auth.Handler,
+) *Handlers {
+	return &Handlers{
+		Auth: authHandler,
+	}
 }
