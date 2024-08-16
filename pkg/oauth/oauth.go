@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 )
 
 func NewClient() OAuth {
@@ -15,6 +16,7 @@ func NewClient() OAuth {
 		ClientID:     os.Getenv("CLIENT_ID"),
 		ClientSecret: os.Getenv("CLIENT_SECRET"),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+		Endpoint:     google.Endpoint,
 	}
 
 	return &oauthImpl{

@@ -9,7 +9,7 @@ import (
 func InitV1Router(h *handler.Handlers) http.Handler {
 	mux := http.NewServeMux()
 
-	// mux.HandleFunc("/", h.Auth.ReturnHelloWorld)
+	mux.HandleFunc("/", h.Auth.ReturnHelloWorld)
 	mux.Handle("/auth/", auth.InitRouter(h))
 
 	return http.StripPrefix("/v1", mux)

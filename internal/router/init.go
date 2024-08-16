@@ -2,6 +2,7 @@ package router
 
 import (
 	"backend/internal/handler"
+	"backend/internal/middleware"
 	v1 "backend/internal/router/v1"
 	"net/http"
 )
@@ -14,5 +15,5 @@ func InitRouter(h *handler.Handlers) http.Handler {
 	// mux.HandleFunc("/", h.Auth.ReturnHelloWorld)
 	mux.Handle("/v1/", v1.InitV1Router(h))
 
-	return mux
+	return middleware.Logger(mux)
 }
