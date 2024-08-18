@@ -5,7 +5,14 @@ import (
 	"context"
 )
 
-func (r *RepositoryImpl) Create(ctx context.Context, data entity.User) error {
+func (r *RepositoryImpl) Create(ctx context.Context, data entity.User) (*entity.User, error) {
+	query := `INSERT INTO users (id, email) VALUES ($1, $2)`
 
-	return nil
+	_, err := r.db.Exec(ctx, query, data.Id, data.Email)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &data, err
 }

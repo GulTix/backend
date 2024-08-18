@@ -27,9 +27,11 @@ func setHeader(w http.ResponseWriter) http.ResponseWriter {
 	return w
 }
 
-func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, message string, success bool) {
-	w = setHeader(w)
+func SetRawResponse(w http.ResponseWriter, httpStatus int, data any) {
+	sentResponse(w, httpStatus, data)
+}
 
+func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, message string, success bool) {
 	response := DataTemplate{
 		Message: message,
 		Success: success,
@@ -37,45 +39,39 @@ func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, messag
 		Data:    data,
 	}
 
-	encoded, err := json.Marshal(response)
-
-	if err != nil {
-		log.Printf("[ERROR][Util][WriteSuccess] marshalling response, %+v\n", err)
-	}
-
-	w.WriteHeader(httpStatus)
-	w.Write(encoded)
+	sentResponse(w, httpStatus, response)
 }
 
 func SetError(w http.ResponseWriter, httpStatus int, err error) {
-	w = setHeader(w)
-
-	response := ErrorMsg{
-		Error: err.Error(),
+	response := ErrorTemplate{
+		Message: err.Error(),
+		Success: false,
+		Status:  http.StatusText(httpStatus),
 	}
 
-	encoded, err := json.Marshal(response)
-
-	if err != nil {
-		log.Printf("[ERROR][Util][WriteError] marshalling response, %+v\n", err)
-	}
-
-	w.WriteHeader(httpStatus)
-	w.Write(encoded)
+	sentResponse(w, httpStatus, response)
 }
 
 func ReturnInternalServerError(w http.ResponseWriter) {
-	w = setHeader(w)
-	response := ErrorMsg{
-		Error: "Internal Server Error",
+	response := ErrorTemplate{
+		Message: "Internal Server Error",
+		Success: false,
+		Status:  http.StatusText(http.StatusInternalServerError),
 	}
 
-	encoded, err := json.Marshal(response)
+	sentResponse(w, http.StatusInternalServerError, response)
+}
+
+func sentResponse(w http.ResponseWriter, header int, data any) {
+	encoded, err := json.Marshal(data)
 
 	if err != nil {
-		log.Printf("[ERROR][Util][WriteError] marshalling response, %+v\n", err)
+		log.Printf("[ERROR][Util][Write Error] Marshalling Reponse Error, %+v\n", err)
+		ReturnInternalServerError(w)
+		return
 	}
 
-	w.WriteHeader(http.StatusInternalServerError)
+	w = setHeader(w)
+	w.WriteHeader(header)
 	w.Write(encoded)
 }

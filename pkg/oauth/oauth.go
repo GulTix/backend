@@ -1,6 +1,8 @@
 package oauth
 
 import (
+	"context"
+	"io"
 	"log"
 	"net/url"
 	"os"
@@ -29,14 +31,35 @@ func (o *oauthImpl) GetRedirectURL() string {
 	if err != nil {
 		log.Println("Parse: " + err.Error())
 	}
-	log.Println(URL.String())
+
 	parameters := url.Values{}
 	parameters.Add("client_id", o.client.ClientID)
 	parameters.Add("scope", strings.Join(o.client.Scopes, " "))
 	parameters.Add("redirect_uri", o.client.RedirectURL)
 	parameters.Add("response_type", "code")
-	// parameters.Add("state", oauthStateString)
 	URL.RawQuery = parameters.Encode()
 	url := URL.String()
 	return url
+}
+
+func (o *oauthImpl) GetToken(ctx context.Context,code string) (*oauth2.Token, error) {
+	return o.client.Exchange(ctx, code)
+}
+
+func (o *oauthImpl) GetInfo(ctx context.Context,token *oauth2.Token, url string) ([]byte, error) {
+	client := o.client.Client(ctx, token)
+	resp, err := client.Get(url)
+	if err != nil {
+		return nil, err 
+	}
+
+	defer resp.Body.Close()
+
+	data, err := io.ReadAll(resp.Body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
 }

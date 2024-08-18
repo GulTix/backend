@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"backend/pkg/response"
+	"fmt"
 	"net/http"
 )
 
@@ -28,4 +30,29 @@ func (h *HandlerImpl) ReturnHelloWorld(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"message": "Hello World"}`))
+}
+
+// Google Callbacks godoc
+// @Summary Callbacks Google Login
+// @Description Callbacks Google Login
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Router /v1/auth/google/callback [get]
+func (h *HandlerImpl) GoogleCallback(w http.ResponseWriter, r *http.Request) {
+	code := r.URL.Query().Get("code")
+
+	if code == "" {
+		response.SetError(w, http.StatusBadRequest, fmt.Errorf("No Code Returned"))
+		return
+	}
+
+	res, err := h.oauthService.ReturnGoogleCallbackResponse(r.Context(), code)
+
+	if err != nil {
+		response.SetError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	response.SetRawResponse(w, http.StatusOK, res)
 }

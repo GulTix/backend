@@ -15,5 +15,7 @@ func InitRouter(h *handler.Handlers) http.Handler {
 	// mux.HandleFunc("/", h.Auth.ReturnHelloWorld)
 	mux.Handle("/v1/", v1.InitV1Router(h))
 
-	return middleware.Logger(mux)
+	muxJwt := middleware.JwtValidator(mux)
+
+	return middleware.Logger(muxJwt)
 }

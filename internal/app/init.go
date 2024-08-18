@@ -2,9 +2,14 @@ package app
 
 import (
 	"backend/internal/handler"
-	"backend/internal/handler/auth"
+	authHandler "backend/internal/handler/auth"
+	authService "backend/internal/service/auth"
+	userRepository "backend/internal/repository/user"
 	oauth "backend/internal/service/oauth"
+	"backend/pkg/database"
 	oauth_pkg "backend/pkg/oauth"
+	"context"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -12,11 +17,18 @@ import (
 func InitHttp() *Server {
 	_ = godotenv.Load(".env")
 
+	ctx := context.Background()
+	connetionString := os.Getenv("DATABASE_URL")
+
+	db := database.NewDB(ctx, connetionString)
 	oauthClient := oauth_pkg.NewClient()
 
-	oauthService := oauth.NewService(oauthClient)
+	userRepo := userRepository.NewRepository(db)
 
-	authHandler := auth.NewHandler(oauthService)
+	authService := authService.NewService()
+	oauthService := oauth.NewService(oauthClient, userRepo, authService)
+
+	authHandler := authHandler.NewHandler(oauthService)
 
 	serverHandlers := handler.NewHandler(authHandler)
 	server := NewServer(serverHandlers)
