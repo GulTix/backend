@@ -4,6 +4,9 @@ import (
 	"backend/internal/handler"
 	authHandler "backend/internal/handler/auth"
 	authService "backend/internal/service/auth"
+
+	formHandler "backend/internal/handler/forms"
+
 	userRepository "backend/internal/repository/user"
 	oauth "backend/internal/service/oauth"
 	"backend/pkg/database"
@@ -29,8 +32,9 @@ func InitHttp() *Server {
 	oauthService := oauth.NewService(oauthClient, userRepo, authService)
 
 	authHandler := authHandler.NewHandler(oauthService)
+	formHandler := formHandler.NewHandler()
 
-	serverHandlers := handler.NewHandler(authHandler)
+	serverHandlers := handler.NewHandler(authHandler, formHandler)
 	server := NewServer(serverHandlers)
 	return server
 }

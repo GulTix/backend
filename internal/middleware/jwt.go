@@ -5,6 +5,7 @@ import (
 	"backend/pkg/response"
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -20,10 +21,9 @@ func JwtValidator(next http.Handler) http.Handler {
 			return
 		}
 
-
 		authorizationHeader := r.Header.Get("Authorization")
-		if !strings.Contains("Bearer", authorizationHeader) {
-			response.SetError(w, http.StatusUnauthorized, nil)
+		if !strings.Contains(authorizationHeader, "Bearer") {
+			response.SetError(w, http.StatusUnauthorized, fmt.Errorf("invalid token"))
 			return
 		}
 
@@ -44,13 +44,14 @@ func JwtValidator(next http.Handler) http.Handler {
 		})
 
 		if err != nil {
+			log.Printf("[Middleware][JwtValidator] Error: %v\n", err)
 			response.SetError(w, http.StatusUnauthorized, fmt.Errorf("invalid token"))
 			return
 		}
 
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok || !token.Valid {
-			response.SetError(w, http.StatusUnauthorized, nil)
+			response.SetError(w, http.StatusUnauthorized, fmt.Errorf("invalid token"))
 			return
 		}
 

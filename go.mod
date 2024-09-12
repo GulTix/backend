@@ -27,6 +27,7 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/midtrans/midtrans-go v1.3.8 // indirect
 	github.com/swaggo/files v1.0.1 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/crypto v0.25.0 // indirect

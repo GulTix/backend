@@ -35,10 +35,12 @@ func (h *HandlerImpl) ReturnHelloWorld(w http.ResponseWriter, r *http.Request) {
 // Google Callbacks godoc
 // @Summary Callbacks Google Login
 // @Description Callbacks Google Login
+// @Param code query string true "Code"
 // @Tags Auth
 // @Accept json
 // @Produce json
 // @Router /v1/auth/google/callback [get]
+// @Success 200 {object} oauth.GoogleCallbackResponse
 func (h *HandlerImpl) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 
