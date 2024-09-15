@@ -8,6 +8,7 @@
   packages = [
     pkgs.go
     pkgs.go-swag
+    pkgs.go-migrate
     # pkgs.python311
     # pkgs.python311Packages.pip
     # pkgs.nodejs_20
@@ -15,11 +16,16 @@
   ];
 
   # Sets environment variables in the workspace
-  env = {};
+  env = {
+    POSTGRES_URL="postgresql://[username]:endpoint=[device_id];c[password]@[host_address]/[db_name]?sslmode=require";
+    MIGRATION_PATH="pkg/migrations/query";
+  };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       # "vscodevim.vim"
+      "golang.go"
+      "rangav.vscode-thunder-client"
     ];
 
     # Enable previews
