@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR NOT NULL,
     phone_number VARCHAR NOT NULL,
     email VARCHAR NOT NULL UNIQUE,
+    gender VARCHAR,
     deleted BOOLEAN DEFAULT FALSE
 );
 
@@ -12,6 +13,7 @@ CREATE TABLE IF NOT EXISTS events (
     "name" VARCHAR NOT NULL,
     bevy_link VARCHAR NOT NULL,
     google_form_link VARCHAR,
+    blaster_token JSONB,
     deleted BOOLEAN DEFAULT FALSE
 );
 

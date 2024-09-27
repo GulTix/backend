@@ -22,6 +22,14 @@ func JwtValidator(next http.Handler) http.Handler {
 		}
 
 		authorizationHeader := r.Header.Get("Authorization")
+
+		// Skipping for using API-KEY
+		if strings.HasPrefix(r.URL.Path, "v1/forms") && os.Getenv("API_KEY") == authorizationHeader {
+			next.ServeHTTP(w, r)
+			return
+		}
+
+		// Validating JWT Token
 		if !strings.Contains(authorizationHeader, "Bearer") {
 			response.SetError(w, http.StatusUnauthorized, fmt.Errorf("invalid token"))
 			return

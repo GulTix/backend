@@ -2,7 +2,7 @@ package oauth
 
 import (
 	"backend/internal/entity"
-	"backend/internal/repository/user"
+	"backend/internal/repository/users"
 	"backend/internal/service"
 	"backend/internal/service/auth"
 	"backend/pkg/oauth"
@@ -18,16 +18,16 @@ type (
 	}
 
 	ServiceImpl struct {
-		oauth oauth.OAuth
-		userRepo user.Repository
+		oauth       oauth.OAuth
+		userRepo    users.Repository
 		authService auth.Service
 	}
 
 	GoogleCallbackResponse = service.BaseResponse[LoginData]
 
 	LoginData struct {
-		Token string `json:"token"`
-		User  entity.User   `json:"user"`
+		Token string      `json:"token"`
+		User  entity.User `json:"user"`
 	}
 
 	GoogleUserData struct {

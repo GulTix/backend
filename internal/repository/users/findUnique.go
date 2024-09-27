@@ -1,4 +1,4 @@
-package user
+package users
 
 import (
 	"backend/internal/entity"
@@ -18,11 +18,11 @@ func (r *RepositoryImpl) FindUnique(ctx context.Context, value string, column st
 	if err != nil {
 		return &user, err
 	}
-	
+
 	defer rows.Close()
-	
+
 	user, err = pgx.CollectOneRow(rows, pgx.RowToStructByName[entity.User])
-	
+
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return nil, nil

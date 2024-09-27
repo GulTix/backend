@@ -1,19 +1,19 @@
 package oauth
 
 import (
-	"backend/internal/repository/user"
+	"backend/internal/repository/users"
 	"backend/internal/service/auth"
 	"backend/pkg/oauth"
 )
 
 func NewService(
 	oauth oauth.OAuth,
-	userRepo user.Repository,
+	userRepo users.Repository,
 	authService auth.Service,
 ) Service {
 	return &ServiceImpl{
-		oauth:    oauth,
-		userRepo: userRepo,
+		oauth:       oauth,
+		userRepo:    userRepo,
 		authService: authService,
 	}
 }

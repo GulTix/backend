@@ -19,4 +19,13 @@ type (
 		Currency          string `json:"currency"`
 		Acquirer          string `json:"acquirer"`
 	}
+
+	Payment struct {
+		Id         string `json:"id" db:"id"`
+		AnswerId   string `json:"answer_id" db:"answer_id"`
+		TicketTypeId string `json:"ticket_type_id" db:"ticket_type_id"`
+		QrisUrl    string `json:"qris_url" db:"qris_url"`
+		Status     string `json:"status" db:"status"`
+		Deleted    bool   `json:"deleted" db:"deleted"`
+	}
 )

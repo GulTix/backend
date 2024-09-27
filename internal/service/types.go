@@ -1,14 +1,15 @@
 package service
 
 type (
-	BaseResponse [T any] struct {
-		Success bool   `json:"success"`
-		Message string `json:"message"`
-		Data    T `json:"data"`
+	BaseResponse[T any] struct {
+		StatusCode int    `json:"status_code"`
+		Success    bool   `json:"success"`
+		Message    string `json:"message"`
+		Data       T      `json:"data"`
 	}
 
-	IBaseResponse [T any] interface {
-		IsSuccess() bool 
+	IBaseResponse[T any] interface {
+		IsSuccess() bool
 		GetMessage() string
 		GetData() T
 	}

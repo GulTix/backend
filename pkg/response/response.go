@@ -43,6 +43,7 @@ func SetResponse(w http.ResponseWriter, httpStatus int, data interface{}, messag
 }
 
 func SetError(w http.ResponseWriter, httpStatus int, err error) {
+	log.Println(err)
 	response := ErrorTemplate{
 		Message: err.Error(),
 		Success: false,
@@ -52,7 +53,9 @@ func SetError(w http.ResponseWriter, httpStatus int, err error) {
 	sentResponse(w, httpStatus, response)
 }
 
-func ReturnInternalServerError(w http.ResponseWriter) {
+func ReturnInternalServerError(w http.ResponseWriter, err error) {
+	log.Println(err)
+
 	response := ErrorTemplate{
 		Message: "Internal Server Error",
 		Success: false,
@@ -67,7 +70,7 @@ func sentResponse(w http.ResponseWriter, header int, data any) {
 
 	if err != nil {
 		log.Printf("[ERROR][Util][Write Error] Marshalling Reponse Error, %+v\n", err)
-		ReturnInternalServerError(w)
+		ReturnInternalServerError(w, err)
 		return
 	}
 
