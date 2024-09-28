@@ -22,10 +22,10 @@ type (
 	FindAllResponse = service.BaseResponse[[]entity.Answer]
 
 	CreateBody struct {
-		EventId     string
-		FirstName   string `json:"first_name"`
-		LastName    string `json:"last_name"`
-		PhoneNumber string `json:"phone_number"`
+		EventId     string `json:"eventId"`
+		FirstName   string `json:"firstName"`
+		LastName    string `json:"lastName"`
+		PhoneNumber string `json:"phoneNumber"`
 		Gender      string `json:"gender"`
 		Email       string `json:"email"`
 		RawData     map[string]any
