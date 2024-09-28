@@ -22,7 +22,6 @@ type (
 
 	CreateBody struct {
 		Name           string `json:"name" db:"name"`
-		BevyLink       string `json:"bevy_link" db:"bevy_link"`
 		GoogleFormLink string `json:"google_form_link" db:"google_form_link"`
 	}
 )

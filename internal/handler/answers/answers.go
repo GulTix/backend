@@ -4,6 +4,7 @@ import (
 	"backend/internal/service/answers"
 	"backend/pkg/response"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -45,7 +46,7 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if err.Error() == "duplicated data" {
-			response.SetRawResponse(w, res.StatusCode, res)
+			response.SetError(w, http.StatusBadRequest, fmt.Errorf("Duplicated with same user_id and event_id is already exists."))
 			return
 		}
 

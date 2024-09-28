@@ -15,7 +15,6 @@ func (s *serviceImpl) Create(ctx context.Context, body CreateBody) (*CreateRespo
 	eventRaw := entity.Event{
 		Id:             uuid.NewString(),
 		Name:           body.Name,
-		BevyLink:       body.BevyLink,
 		GoogleFormLink: body.BevyLink,
 		Deleted:        false,
 		BlasterToken:   nil,

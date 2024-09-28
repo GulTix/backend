@@ -43,14 +43,14 @@ func (s *serviceImpl) Create(ctx context.Context, body CreateBody) (*CreateRespo
 	}
 
 	// Find Existing Answer
-	answer, err = s.repo.FindExisting(ctx, user.Id, body.EventId)
+	answer, err = s.repo.FindExisting(ctx, body.EventId, user.Id)
 
 	if err != nil {
 		return nil, err
 	}
 
 	if answer != nil {
-		err = fmt.Errorf("duplicate data")
+		err = fmt.Errorf("duplicated data")
 		return nil, err
 	}
 
