@@ -9,9 +9,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func (s *serviceImpl) GenerateToken(user entity.User) (*string, error) {
+func (s *serviceImpl) GenerateToken(volunteer entity.Volunteer) (*string, error) {
 	expiredString := os.Getenv("JWT_EXPIRED_TIME")
-	jwtSecret := []byte (os.Getenv("JWT_SECRET"))
+	jwtSecret := []byte(os.Getenv("JWT_SECRET"))
 	signMethod := jwt.SigningMethodHS256
 
 	expiredTime, err := time.ParseDuration(expiredString)
@@ -24,12 +24,12 @@ func (s *serviceImpl) GenerateToken(user entity.User) (*string, error) {
 	claims := TokenClaims{
 		jwt.RegisteredClaims{
 			Issuer:    os.Getenv("JWT_ISSUER"),
-			Subject:   user.Id,
+			Subject:   volunteer.Id,
 			Audience:  []string{"user"},
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiredTime)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
-		user,
+		volunteer,
 	}
 
 	token := jwt.NewWithClaims(signMethod, claims)

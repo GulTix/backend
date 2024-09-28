@@ -21,16 +21,22 @@ func JwtValidator(next http.Handler) http.Handler {
 			return
 		}
 
+		if os.Getenv("ENV") == "dev" && strings.HasPrefix(r.URL.Path, "/v1/auth/debug") {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		authorizationHeader := r.Header.Get("Authorization")
 
 		// Skipping for using API-KEY
-		if strings.HasPrefix(r.URL.Path, "v1/forms") && os.Getenv("API_KEY") == authorizationHeader {
+		if strings.HasPrefix(r.URL.Path, "/v1/forms") && os.Getenv("API_KEY") == authorizationHeader {
 			next.ServeHTTP(w, r)
 			return
 		}
 
 		// Validating JWT Token
 		if !strings.Contains(authorizationHeader, "Bearer") {
+			log.Println(authorizationHeader)
 			response.SetError(w, http.StatusUnauthorized, fmt.Errorf("invalid token"))
 			return
 		}

@@ -27,6 +27,7 @@ func (h *HandlerImpl) GoogleLogin(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Router /v1 [get]
+// @Security ApiKeyAuth
 func (h *HandlerImpl) ReturnHelloWorld(w http.ResponseWriter, r *http.Request) {
 	log.Println("Incoming")
 	w.Header().Set("Content-Type", "application/json")

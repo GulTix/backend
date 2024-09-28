@@ -14,6 +14,7 @@ import (
 	answerRepository "backend/internal/repository/answers"
 	eventRepository "backend/internal/repository/events"
 	userRepository "backend/internal/repository/users"
+	volunteerRepository "backend/internal/repository/volunteers"
 
 	oauth "backend/internal/service/oauth"
 	"backend/pkg/database"
@@ -36,13 +37,28 @@ func InitHttp() *Server {
 	userRepo := userRepository.NewRepository(db)
 	eventRepo := eventRepository.NewRepository(db)
 	answerRepo := answerRepository.NewRepository(db)
+	volunteerRepo := volunteerRepository.NewRepository(db)
 
-	authService := authService.NewService()
-	oauthService := oauth.NewService(oauthClient, userRepo, authService)
+	if os.Getenv("ENV") == "dev" {
+		err := volunteerRepo.CreateDevVolunteer(ctx)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	authService := authService.NewService(volunteerRepo)
+	oauthService := oauth.NewService(
+		oauthClient,
+		userRepo,
+		volunteerRepo,
+		authService,
+	)
 	eventService := eventService.NewService(eventRepo)
 	answerService := answerService.NewService(answerRepo, userRepo)
-
-	authHandler := authHandler.NewHandler(oauthService)
+	authHandler := authHandler.NewHandler(
+		oauthService,
+		authService,
+	)
 	formHandler := formHandler.NewHandler()
 	eventHandler := eventHandler.NewHandler(eventService)
 	answerHandler := answerHandler.NewHandler(answerService)

@@ -16,7 +16,7 @@ func (r *RepositoryImpl) FindUnique(ctx context.Context, value string, column st
 	rows, err := r.db.Query(ctx, query, value)
 
 	if err != nil {
-		return &user, err
+		return nil, err
 	}
 
 	defer rows.Close()
@@ -27,7 +27,7 @@ func (r *RepositoryImpl) FindUnique(ctx context.Context, value string, column st
 		if err == pgx.ErrNoRows {
 			return nil, nil
 		}
-		return &user, err
+		return nil, err
 	}
 
 	return &user, nil

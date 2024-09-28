@@ -11,12 +11,13 @@ import (
 
 // CreateAnswers godoc
 // @Summary Create Answers
-// @Tags Answers
+// @Tags Forms
 // @Accept json
 // @Produce json
 // @Param body body answers.CreateBody true "Create Body"
 // @Success 201 {object} answers.CreateResponse
-// @Router /v1/answers/ [post]
+// @Router /v1/forms/answers/ [post]
+// @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	var (
 		body answers.CreateBody

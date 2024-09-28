@@ -1,12 +1,10 @@
 package oauth
 
 import (
-	"backend/internal/entity"
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
-
-	"github.com/google/uuid"
 )
 
 func (s *ServiceImpl) GetGoogleLoginURL() string {
@@ -36,30 +34,18 @@ func (s *ServiceImpl) ReturnGoogleCallbackResponse(ctx context.Context, code str
 		return nil, err
 	}
 
-	user, err := s.userRepo.FindUnique(ctx, userGoogle.Email, "email")
+	volunteer, err := s.volunteerRepo.FindUnique(ctx, userGoogle.Email, "email")
 
 	if err != nil {
 		log.Printf("[Oauth][ReturnGoogleCallbackResponse][FindUnique] Error Finding User +%v\n", err)
 		return nil, err
 	}
 
-	if user == nil {
-		newUser := entity.User{
-			Id:    uuid.NewString(),
-			Email: userGoogle.Email,
-		}
-
-		createdUser, err := s.userRepo.Create(ctx, newUser)
-
-		if err != nil {
-			log.Printf("[Oauth][ReturnGoogleCallbackResponse][Create] Error Creating User +%v\n", err)
-			return nil, err
-		}
-
-		user = createdUser
+	if volunteer == nil {
+		return nil, fmt.Errorf("User not found")
 	}
 
-	signedToken, err := s.authService.GenerateToken(*user)
+	signedToken, err := s.authService.GenerateToken(*volunteer)
 
 	if err != nil {
 		log.Printf("[Oauth][ReturnGoogleCallbackResponse][GenerateToken] Error Generating Token +%v\n", err)
@@ -67,7 +53,7 @@ func (s *ServiceImpl) ReturnGoogleCallbackResponse(ctx context.Context, code str
 	}
 
 	loginData := LoginData{
-		User:  *user,
+		User:  *volunteer,
 		Token: *signedToken,
 	}
 

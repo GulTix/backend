@@ -18,6 +18,7 @@ import (
 // @Param body body events.CreateBody true "Create Body"
 // @Success 201 {object} events.CreateResponse
 // @Router /v1/events/ [post]
+// @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	var (
 		body events.CreateBody
@@ -56,6 +57,7 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Router /v1/events/ [get]
+// @Security ApiKeyAuth
 func (h *HandlerImpl) FindAll(w http.ResponseWriter, r *http.Request) {
 	res, err := h.eventService.FindAll(r.Context())
 
