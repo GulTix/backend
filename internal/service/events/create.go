@@ -13,11 +13,10 @@ func (s *serviceImpl) Create(ctx context.Context, body CreateBody) (*CreateRespo
 	)
 
 	eventRaw := entity.Event{
-		Id:             uuid.NewString(),
-		Name:           body.Name,
-		GoogleFormLink: body.BevyLink,
-		Deleted:        false,
-		BlasterToken:   nil,
+		Id:           uuid.NewString(),
+		Name:         body.Name,
+		Deleted:      false,
+		BlasterToken: nil,
 	}
 
 	event, err := s.repo.Create(ctx, eventRaw)
