@@ -7,6 +7,6 @@ import (
 
 func InitRouter(h *handler.Handlers) http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /", h.Answer.Create)
+	mux.HandleFunc("GET /", h.Answer.GetAll)
 	return http.StripPrefix("/answers", mux)
 }

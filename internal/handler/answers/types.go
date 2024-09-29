@@ -12,5 +12,6 @@ type (
 
 	Handler interface {
 		Create(w http.ResponseWriter, r *http.Request)
+		GetAll(w http.ResponseWriter, r *http.Request)
 	}
 )
