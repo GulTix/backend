@@ -57,3 +57,42 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	response.SetRawResponse(w, http.StatusCreated, res)
 	return
 }
+
+// Get All Answers godoc
+// @Summary Get All Answers
+// @Tags Answers
+// @Accept json
+// @Produce json
+// @Param event_id query string false "Event ID"cd
+// @Router /v1/answers/ [get]
+// @Security ApiKeyAuth
+// @Success 200 {object} answers.FindAllResponse
+// @Success 404 {object} answers.FindAllResponse
+func (h *HandlerImpl) GetAll(w http.ResponseWriter, r *http.Request) {
+	var (
+		res *answers.FindAllResponse
+		err error
+	)
+	eventId := r.URL.Query().Get("event_id")
+
+	if eventId != "" {
+		res, err = h.answerService.FindAllByEventId(r.Context(), eventId)
+
+		if err != nil {
+			response.ReturnInternalServerError(w, err)
+			return
+		}
+
+		response.SetRawResponse(w, res.StatusCode, res)
+		return
+	}
+
+	res, err = h.answerService.FindAll(r.Context())
+
+	if err != nil {
+		response.ReturnInternalServerError(w, err)
+		return
+	}
+
+	response.SetRawResponse(w, res.StatusCode, res)
+}

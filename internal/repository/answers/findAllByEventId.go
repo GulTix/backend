@@ -12,7 +12,7 @@ func (r *RepositoryImpl) FindAllByEventId(ctx context.Context, eventId string) (
 		answers []entity.Answer
 	)
 
-	query := `SELECT * FROM answers WHERE deleted = FALSE AND eventId = $1`
+	query := `SELECT * FROM answers WHERE deleted = FALSE AND event_id = $1`
 
 	rows, err := r.db.Query(ctx, query, eventId)
 

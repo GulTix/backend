@@ -11,6 +11,8 @@ import (
 type (
 	Service interface {
 		Create(ctx context.Context, body CreateBody) (*CreateResponse, error)
+		FindAll(ctx context.Context) (*FindAllResponse, error)
+		FindAllByEventId(ctx context.Context, eventId string) (*FindAllResponse, error)
 	}
 
 	serviceImpl struct {
