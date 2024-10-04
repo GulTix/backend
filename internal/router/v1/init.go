@@ -6,6 +6,9 @@ import (
 	"backend/internal/router/v1/auth"
 	"backend/internal/router/v1/events"
 	"backend/internal/router/v1/forms"
+	"backend/internal/router/v1/payments"
+	"backend/internal/router/v1/tickets"
+	"backend/internal/router/v1/validations"
 	"net/http"
 )
 
@@ -17,6 +20,9 @@ func InitV1Router(h *handler.Handlers) http.Handler {
 	mux.Handle("/forms/", forms.InitRouter(h))
 	mux.Handle("/events/", events.InitRouter(h))
 	mux.Handle("/answers/", answers.InitRouter(h))
+	mux.Handle("/validations/", validations.InitRouter(h))
+	mux.Handle("/tickets/", tickets.InitRouter(h))
+	mux.Handle("/payments/", payments.InitRouter(h))
 
 	return http.StripPrefix("/v1", mux)
 }

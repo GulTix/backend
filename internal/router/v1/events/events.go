@@ -9,5 +9,8 @@ func InitRouter(h *handler.Handlers) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /", h.Event.Create)
 	mux.HandleFunc("GET /", h.Event.FindAll)
+	mux.HandleFunc("GET /{id}/login/", h.Event.GoogleLogin)
+	mux.HandleFunc("PUT /{id}/token/", h.Event.SetGoogleToken)
+	mux.HandleFunc("GET /{id}/tickets/", h.Event.FindAllTicket)
 	return http.StripPrefix("/events", mux)
 }
