@@ -5,6 +5,9 @@ import (
 	"backend/internal/handler/auth"
 	"backend/internal/handler/events"
 	"backend/internal/handler/forms"
+	"backend/internal/handler/payments"
+	ticketTypes "backend/internal/handler/tickets"
+	"backend/internal/handler/validations"
 )
 
 func NewHandler(
@@ -12,11 +15,17 @@ func NewHandler(
 	formHandler forms.Handler,
 	eventHandler events.Handler,
 	answerHandler answers.Handler,
+	ticketTypeHandler ticketTypes.Handler,
+	validationHandler validations.Handler,
+	paymentHandler payments.Handler,
 ) *Handlers {
 	return &Handlers{
-		Auth:   authHandler,
-		Form:   formHandler,
-		Event:  eventHandler,
-		Answer: answerHandler,
+		Auth:       authHandler,
+		Form:       formHandler,
+		Event:      eventHandler,
+		Answer:     answerHandler,
+		Ticket:     ticketTypeHandler,
+		Validation: validationHandler,
+		Payment:    paymentHandler,
 	}
 }

@@ -21,11 +21,14 @@ type (
 	}
 
 	Payment struct {
-		Id         string `json:"id" db:"id"`
-		AnswerId   string `json:"answer_id" db:"answer_id"`
+		Id           string `json:"id" db:"id"`
+		AnswerId     string `json:"answer_id" db:"answer_id"`
 		TicketTypeId string `json:"ticket_type_id" db:"ticket_type_id"`
-		QrisUrl    string `json:"qris_url" db:"qris_url"`
-		Status     string `json:"status" db:"status"`
-		Deleted    bool   `json:"deleted" db:"deleted"`
+		QrisUrl      string `json:"qris_url" db:"qris_url"`
+		Status       string `json:"status" db:"status"`
+		Deleted      bool   `json:"deleted" db:"deleted"`
+		CreatedAt    string `json:"created_at" db:"created_at"`
+		UpdatedAt    string `json:"updated_at" db:"updated_at"`
+		Acquirer     string `json:"acquirer" db:"acquirer"`
 	}
 )

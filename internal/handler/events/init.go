@@ -1,9 +1,16 @@
 package events
 
-import "backend/internal/service/events"
+import (
+	"backend/internal/service/events"
+	"backend/internal/service/tickets"
+)
 
-func NewHandler(eventService events.Service) Handler {
+func NewHandler(
+	eventService events.Service,
+	ticketService tickets.Service,
+) Handler {
 	return &HandlerImpl{
-		eventService: eventService,
+		eventService:  eventService,
+		ticketService: ticketService,
 	}
 }

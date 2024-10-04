@@ -21,6 +21,11 @@ func JwtValidator(next http.Handler) http.Handler {
 			return
 		}
 
+		if strings.HasPrefix(r.URL.Path, "/v1/payments/callback") {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		if os.Getenv("ENV") == "dev" && strings.HasPrefix(r.URL.Path, "/v1/auth/debug") {
 			next.ServeHTTP(w, r)
 			return

@@ -4,6 +4,7 @@ import (
 	"backend/internal/entity"
 	"backend/internal/repository/events"
 	"backend/internal/service"
+	"backend/pkg/oauth"
 	"context"
 )
 
@@ -11,14 +12,22 @@ type (
 	Service interface {
 		Create(ctx context.Context, data CreateBody) (*CreateResponse, error)
 		FindAll(ctx context.Context) (*FindAllResponse, error)
+		SetGoogleTokenResponse(
+			ctx context.Context,
+			eventId string,
+			code string,
+		) (*SetGoogleTokenResponse, error)
+		GetGoogleLoginURL() string
 	}
 
 	serviceImpl struct {
-		repo events.Repository
+		repo  events.Repository
+		oauth oauth.OAuth
 	}
 
-	CreateResponse  = service.BaseResponse[entity.Event]
-	FindAllResponse = service.BaseResponse[[]entity.Event]
+	CreateResponse         = service.BaseResponse[entity.Event]
+	FindAllResponse        = service.BaseResponse[[]entity.Event]
+	SetGoogleTokenResponse = service.BaseResponse[*entity.Event]
 
 	CreateBody struct {
 		Name           string `json:"name" db:"name"`

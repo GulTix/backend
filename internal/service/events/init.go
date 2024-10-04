@@ -1,9 +1,13 @@
 package events
 
-import "backend/internal/repository/events"
+import (
+	"backend/internal/repository/events"
+	"backend/pkg/oauth"
+)
 
-func NewService(eventRepo events.Repository) Service {
+func NewService(eventRepo events.Repository, oauth oauth.OAuth) Service {
 	return &serviceImpl{
-		repo: eventRepo,
+		repo:  eventRepo,
+		oauth: oauth,
 	}
 }

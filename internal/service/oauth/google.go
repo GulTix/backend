@@ -19,6 +19,8 @@ func (s *ServiceImpl) ReturnGoogleCallbackResponse(ctx context.Context, code str
 		return nil, err
 	}
 
+	log.Printf("%+v", token)
+
 	data, err := s.oauth.GetInfo(ctx, token, "https://www.googleapis.com/oauth2/v3/userinfo")
 
 	if err != nil {
