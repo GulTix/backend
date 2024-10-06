@@ -19,9 +19,20 @@ func (s *ServiceImpl) Create(ctx context.Context, data CreateBody) (*CreateRespo
 		return nil, err
 	}
 
+	message := "Classification created successfully"
+
+	if data.TicketId != "" {
+		err = s.allowClassRepo.Create(ctx, class.Id, data.TicketId)
+		if err != nil {
+			return nil, err
+		}
+
+		message += " and added to allowed ticket type"
+	}
+
 	return &CreateResponse{
 		StatusCode: http.StatusCreated,
-		Message:    "Classification created successfully",
+		Message:    message,
 		Data:       *class,
 	}, nil
 }

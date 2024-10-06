@@ -1,6 +1,7 @@
 package tickets
 
 import (
+	"backend/internal/service/classifications"
 	tickettypes "backend/internal/service/tickets"
 	"net/http"
 )
@@ -12,5 +13,6 @@ type (
 
 	HandlerImpl struct {
 		ticketTypeService tickettypes.Service
+		classService      classifications.Service
 	}
 )

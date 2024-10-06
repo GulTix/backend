@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func (s *ServiceImpl) FindAll(ctx context.Context) (*FindAllResponse, error) {
-	classifications, err := s.classRepo.FindAll(ctx)
+func (s *ServiceImpl) FindAll(ctx context.Context, eventId string) (*FindAllResponse, error) {
+	classifications, err := s.classRepo.FindAllByEventId(ctx, eventId)
 
 	if err != nil {
 		return nil, err

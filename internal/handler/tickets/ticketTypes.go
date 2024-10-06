@@ -11,7 +11,7 @@ import (
 // CreateTicketType godoc
 // @Summary Create Ticket Type
 // @Description Create a Single Ticket Type
-// @Tags Ticket Type
+// @Tags Tickets
 // @Accept json
 // @Produce json
 // @Param body body tickettypes.CreateBody true "Create Body"

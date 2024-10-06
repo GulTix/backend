@@ -3,6 +3,7 @@ package events
 import (
 	"backend/internal/entity"
 	"context"
+	"log"
 
 	"github.com/google/uuid"
 )
@@ -24,6 +25,8 @@ func (s *serviceImpl) Create(ctx context.Context, body CreateBody) (*CreateRespo
 	if err != nil {
 		return nil, err
 	}
+
+	log.Print("Masuk")
 
 	return &CreateResponse{
 		Success: true,

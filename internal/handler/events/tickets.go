@@ -4,7 +4,7 @@ import (
 	"backend/internal/service/tickets"
 	"backend/pkg/response"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -45,7 +45,7 @@ func (h *HandlerImpl) CreateTicket(w http.ResponseWriter, r *http.Request) {
 
 	eventId := r.PathValue("id")
 
-	raw, err := ioutil.ReadAll(r.Body)
+	raw, err := io.ReadAll(r.Body)
 
 	if err != nil {
 		response.ReturnInternalServerError(w, err)

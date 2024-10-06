@@ -5,6 +5,7 @@ import (
 	authHandler "backend/internal/handler/auth"
 	answerService "backend/internal/service/answers"
 	authService "backend/internal/service/auth"
+	classificationsService "backend/internal/service/classifications"
 	eventService "backend/internal/service/events"
 	paymentsService "backend/internal/service/payments"
 	ticketTypeService "backend/internal/service/tickets"
@@ -17,7 +18,9 @@ import (
 	ticketTypeHandler "backend/internal/handler/tickets"
 	validationHandler "backend/internal/handler/validations"
 
+	allowedClassificationRepository "backend/internal/repository/allowedclassifications"
 	answerRepository "backend/internal/repository/answers"
+	classificationRepository "backend/internal/repository/classifications"
 	eventRepository "backend/internal/repository/events"
 	paymentRepository "backend/internal/repository/payments"
 	ticketTypeRepository "backend/internal/repository/tickets"
@@ -63,6 +66,8 @@ func InitHttp() *Server {
 	validationRepo := validationRepository.NewRepository(db)
 	ticketTypeRepository := ticketTypeRepository.NewRepository(db)
 	paymentsRepo := paymentRepository.NewRepository(db)
+	classificationRepo := classificationRepository.NewRepository(db)
+	allowedClassRepo := allowedClassificationRepository.NewRepository(db)
 
 	if os.Getenv("ENV") == "dev" {
 		err := volunteerRepo.CreateDevVolunteer(ctx)
@@ -86,6 +91,7 @@ func InitHttp() *Server {
 	validationService := validationService.NewService(validationRepo)
 	ticketTypeService := ticketTypeService.NewService(ticketTypeRepository)
 	paymentsService := paymentsService.NewService(midtransClient, paymentsRepo, eventService)
+	classificationsService := classificationsService.NewService(classificationRepo, allowedClassRepo)
 
 	authHandler := authHandler.NewHandler(
 		oauthService,
@@ -96,11 +102,12 @@ func InitHttp() *Server {
 	eventHandler := eventHandler.NewHandler(
 		eventService,
 		ticketTypeService,
+		classificationsService,
 	)
 
 	answerHandler := answerHandler.NewHandler(answerService)
 	validationHandler := validationHandler.NewHandler(validationService)
-	ticketTypeHandler := ticketTypeHandler.NewHandler(ticketTypeService)
+	ticketTypeHandler := ticketTypeHandler.NewHandler(ticketTypeService, classificationsService)
 	paymentHandler := paymentHandler.NewHandler(paymentsService)
 
 	serverHandlers := handler.NewHandler(

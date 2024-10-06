@@ -11,12 +11,11 @@ import (
 // Create Validations godoc
 // @Summary Create Validations
 // @Description Create a Single Validation
-// @Tags Validations, Events
+// @Tags Events
 // @Accept json
 // @Produce json
 // @Param body body validations.CreateBody true "Create Body"
 // @Success 201 {object} validations.CreateResponse
-// @Router /v1/validations/ [post]
 // @Router /v1/events/{id}/validations/ [post]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {

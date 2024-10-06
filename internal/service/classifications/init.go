@@ -10,7 +10,7 @@ func NewService(
 	allowedClassificationRepo allowedclassifications.Repository,
 ) Service {
 	return &ServiceImpl{
-		classificationRepo:        classificationRepo,
-		allowedClassificationRepo: allowedClassificationRepo,
+		classRepo:      classificationRepo,
+		allowClassRepo: allowedClassificationRepo,
 	}
 }
