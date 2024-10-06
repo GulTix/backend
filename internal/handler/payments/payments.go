@@ -1,12 +1,10 @@
 package payments
 
 import (
-	"backend/pkg/midtrans"
 	"backend/pkg/response"
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
 )
 
 func (h *HandlerImpl) PaymentCallback(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +32,7 @@ func (h *HandlerImpl) PaymentCallback(w http.ResponseWriter, r *http.Request) {
 
 	log.Println(acquirer)
 
-	_, err = h.paymentService.HandleMidtransCallback(r.Context(), orderId, acquirer)
+	_, err = h.paymentService.HandleMidtransCallback(r.Context(), orderId, notificationPayload)
 
 	if err != nil {
 		response.ReturnInternalServerError(w, err)
@@ -69,15 +67,15 @@ func (h *HandlerImpl) TestPayment(w http.ResponseWriter, r *http.Request) {
 
 	// response.SetRawResponse(w, 200, res)
 
-	midtrans := midtrans.NewMidtrans(
-		os.Getenv("MIDTRANS_SERVER_KEY"),
-		os.Getenv("ENV"),
-		"https://b0fd-182-253-231-201.ngrok-free.app/v1/payments/callback/",
-	)
+	// midtrans := midtrans.NewMidtrans(
+	// 	os.Getenv("MIDTRANS_SERVER_KEY"),
+	// 	os.Getenv("ENV"),
+	// 	"https://b0fd-182-253-231-201.ngrok-free.app/v1/payments/callback/",
+	// )
 
-	log.Println("Midtrans Created")
+	// log.Println("Midtrans Created")
 
-	qris, err := midtrans.GenerateQRIS("Order-010", 50000)
+	qris, err := h.paymentService.TestGenerateQRIS(r.Context())
 
 	if err != nil {
 		response.ReturnInternalServerError(w, err)

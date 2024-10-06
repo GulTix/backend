@@ -19,9 +19,10 @@ type (
 	CreateResponse = service.BaseResponse[entity.Validation]
 
 	CreateBody struct {
-		AnswerId       string `json:"answer_id"`
-		UserId         string `json:"user_id"`
-		VolunteerId    string `json:"volunteer_id"`
-		Classification string `json:"classification"`
+		AnswerId           string `json:"answer_id"`
+		UserId             string `json:"user_id"`
+		VolunteerId        string `json:"volunteer_id"`
+		Classification     string `json:"classification"`
+		IsSentPaymentEmail bool   `json:"is_sent_payment_email"`
 	}
 )

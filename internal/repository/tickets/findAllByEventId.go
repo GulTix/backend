@@ -8,7 +8,7 @@ import (
 )
 
 func (r *RepositoryImpl) FindAllByEventId(ctx context.Context, eventId string) ([]entity.TicketType, error) {
-	query := `SELECT * FROM ticket_types WHERE event_id = $1`
+	query := `SELECT * FROM ticket_type WHERE event_id = $1`
 
 	rows, err := r.db.Query(ctx, query, eventId)
 

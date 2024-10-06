@@ -85,7 +85,7 @@ func InitHttp() *Server {
 	answerService := answerService.NewService(answerRepo, userRepo)
 	validationService := validationService.NewService(validationRepo)
 	ticketTypeService := ticketTypeService.NewService(ticketTypeRepository)
-	paymentsService := paymentsService.NewService(midtransClient, paymentsRepo)
+	paymentsService := paymentsService.NewService(midtransClient, paymentsRepo, eventService)
 
 	authHandler := authHandler.NewHandler(
 		oauthService,
