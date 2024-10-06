@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (s *ServiceImpl) HandleMidtransCallback(ctx context.Context, orderId string, acquirer string) ([]byte, error) {
+func (s *ServiceImpl) HandleMidtransCallback(ctx context.Context, orderId string, payload map[string]any) ([]byte, error) {
 	transactionStatusResp, err := s.midtrans.CheckTransactionStatus(orderId)
 
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *ServiceImpl) HandleMidtransCallback(ctx context.Context, orderId string
 	log.Println("GulTix Status")
 	log.Println(gulTixStatus)
 
-	e := s.paymentRepo.UpdateStatus(ctx, orderId, gulTixStatus, acquirer)
+	e := s.paymentRepo.UpdateStatus(ctx, orderId, gulTixStatus, payload)
 
 	if e != nil {
 		log.Println("Masuk error bang")

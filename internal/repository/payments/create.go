@@ -29,5 +29,9 @@ func (r *RepositoryImpl) Create(ctx context.Context, data entity.Payment) (*enti
 
 	payment, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[entity.Payment])
 
+	if err != nil {
+		return nil, err
+	}
+
 	return &payment, nil
 }

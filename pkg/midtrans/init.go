@@ -1,6 +1,7 @@
 package midtrans
 
 import (
+	"backend/internal/entity"
 	"log"
 
 	"github.com/midtrans/midtrans-go"
@@ -29,7 +30,7 @@ func NewMidtrans(serverKey string, environment string, notificationUrl string) M
 	}
 }
 
-func (m *midtransImpl) GenerateQRIS(orderId string, amount int64) (*coreapi.ChargeResponse, error) {
+func (m *midtransImpl) GenerateQRIS(orderId string, amount int64, userData entity.User, expired int, items *[]midtrans.ItemDetails) (*coreapi.ChargeResponse, error) {
 	reqRaw := coreapi.ChargeReq{
 		PaymentType: coreapi.PaymentTypeQris,
 		TransactionDetails: midtrans.TransactionDetails{
@@ -37,14 +38,15 @@ func (m *midtransImpl) GenerateQRIS(orderId string, amount int64) (*coreapi.Char
 			GrossAmt: amount,
 		},
 		CustomExpiry: &coreapi.CustomExpiry{
-			ExpiryDuration: 24,
+			ExpiryDuration: expired,
 			Unit:           "hour",
 		},
 		CustomerDetails: &midtrans.CustomerDetails{
-			FName: "Azei",
-			LName: "Heu",
-			Email: "muhammadabdulazizalghofari@gmail.com",
+			FName: userData.FirstName,
+			LName: userData.LastName,
+			Email: userData.Email,
 		},
+		Items: items,
 	}
 
 	req, err := m.client.ChargeTransaction(&reqRaw)

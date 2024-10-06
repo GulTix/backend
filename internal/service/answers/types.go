@@ -30,6 +30,8 @@ type (
 		PhoneNumber string `json:"phoneNumber"`
 		Gender      string `json:"gender"`
 		Email       string `json:"email"`
+		TicketName  string `json:"ticketName"`
+		TicketId    string `json:"ticketId"`
 		RawData     map[string]any
 	}
 )

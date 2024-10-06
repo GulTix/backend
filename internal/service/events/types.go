@@ -6,6 +6,8 @@ import (
 	"backend/internal/service"
 	"backend/pkg/oauth"
 	"context"
+
+	"golang.org/x/oauth2"
 )
 
 type (
@@ -18,6 +20,7 @@ type (
 			code string,
 		) (*SetGoogleTokenResponse, error)
 		GetGoogleLoginURL() string
+		GetBlasterToken(ctx context.Context, eventId string) (*oauth2.Token, error)
 	}
 
 	serviceImpl struct {

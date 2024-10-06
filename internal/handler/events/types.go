@@ -18,5 +18,6 @@ type (
 		GoogleLogin(w http.ResponseWriter, r *http.Request)
 		SetGoogleToken(w http.ResponseWriter, r *http.Request)
 		FindAllTicket(w http.ResponseWriter, r *http.Request)
+		CreateTicket(w http.ResponseWriter, r *http.Request)
 	}
 )
