@@ -17,7 +17,6 @@ func (s *serviceImpl) Create(ctx context.Context, body CreateBody) (*CreateRespo
 		Name:           body.Name,
 		GoogleFormLink: body.GoogleFormLink,
 		Deleted:        false,
-		BlasterToken:   nil,
 	}
 
 	event, err := s.repo.Create(ctx, eventRaw)

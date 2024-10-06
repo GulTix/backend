@@ -12,7 +12,7 @@ func (r *RepositoryImpl) FindAll(ctx context.Context) ([]entity.Event, error) {
 		events []entity.Event
 	)
 	query := `
-		SELECT * FROM events 
+		SELECT id, name, google_form_link, deleted FROM events
 	`
 
 	rows, err := r.db.Query(ctx, query)
