@@ -1,7 +1,7 @@
 package tickets
 
 import (
-	tickettypes "backend/internal/service/tickets"
+	"backend/internal/service/tickets"
 	"backend/pkg/response"
 	"encoding/json"
 	"io"
@@ -14,12 +14,12 @@ import (
 // @Tags Tickets
 // @Accept json
 // @Produce json
-// @Param body body tickettypes.CreateBody true "Create Body"
-// @Success 201 {object} tickettypes.CreateResponse
+// @Param body body tickets.CreateBody true "Create Body"
+// @Success 201 {object} tickets.CreateResponse
 // @Router /v1/tickets/ [post]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
-	var body tickettypes.CreateBody
+	var body tickets.CreateBody
 
 	raw, err := io.ReadAll(r.Body)
 

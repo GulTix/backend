@@ -12,6 +12,7 @@ import (
 	validationService "backend/internal/service/validations"
 
 	answerHandler "backend/internal/handler/answers"
+	classHandler "backend/internal/handler/classifications"
 	eventHandler "backend/internal/handler/events"
 	formHandler "backend/internal/handler/forms"
 	paymentHandler "backend/internal/handler/payments"
@@ -90,7 +91,7 @@ func InitHttp() *Server {
 	answerService := answerService.NewService(answerRepo, userRepo)
 	validationService := validationService.NewService(validationRepo)
 	ticketTypeService := ticketTypeService.NewService(ticketTypeRepository)
-	paymentsService := paymentsService.NewService(midtransClient, paymentsRepo, eventService)
+	paymentsService := paymentsService.NewService(midtransClient, paymentsRepo, eventService, oauthBlasterClient)
 	classificationsService := classificationsService.NewService(classificationRepo, allowedClassRepo)
 
 	authHandler := authHandler.NewHandler(
@@ -109,6 +110,7 @@ func InitHttp() *Server {
 	validationHandler := validationHandler.NewHandler(validationService)
 	ticketTypeHandler := ticketTypeHandler.NewHandler(ticketTypeService, classificationsService)
 	paymentHandler := paymentHandler.NewHandler(paymentsService)
+	classHandler := classHandler.NewHandler(classificationsService)
 
 	serverHandlers := handler.NewHandler(
 		authHandler,
@@ -118,6 +120,7 @@ func InitHttp() *Server {
 		ticketTypeHandler,
 		validationHandler,
 		paymentHandler,
+		classHandler,
 	)
 
 	server := NewServer(serverHandlers)

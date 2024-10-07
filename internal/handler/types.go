@@ -3,6 +3,7 @@ package handler
 import (
 	"backend/internal/handler/answers"
 	"backend/internal/handler/auth"
+	"backend/internal/handler/classifications"
 	"backend/internal/handler/events"
 	"backend/internal/handler/forms"
 	"backend/internal/handler/payments"
@@ -19,5 +20,6 @@ type (
 		Ticket     ticketTypes.Handler
 		Validation validations.Handler
 		Payment    payments.Handler
+		Class      classifications.Handler
 	}
 )

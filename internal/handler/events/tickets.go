@@ -30,16 +30,6 @@ func (h *HandlerImpl) FindAllTicket(w http.ResponseWriter, r *http.Request) {
 	response.SetRawResponse(w, res.StatusCode, res)
 }
 
-// Create Ticket godoc
-// @Summary Create Ticket
-// @Description Create Ticket
-// @Param id path string true "Event ID"
-// @Param body body tickets.CreateBody true "Create Ticket"
-// @Tags Events
-// @Accept json
-// @Produce json
-// @Router /v1/events/{id}/tickets/ [post]
-// @Security ApiKeyAuth
 func (h *HandlerImpl) CreateTicket(w http.ResponseWriter, r *http.Request) {
 	var body tickets.CreateBody
 

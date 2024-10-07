@@ -4,6 +4,7 @@ import (
 	"backend/internal/repository/payments"
 	"backend/internal/service/events"
 	"backend/pkg/midtrans"
+	"backend/pkg/oauth"
 	"context"
 
 	"golang.org/x/oauth2"
@@ -21,5 +22,6 @@ type (
 		midtrans     midtrans.MidtransPkg
 		paymentRepo  payments.Repository
 		eventService events.Service
+		oauthGmail   oauth.OAuth
 	}
 )

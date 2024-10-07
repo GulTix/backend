@@ -14,7 +14,9 @@ import (
 )
 
 type (
-	Gmail interface{}
+	Gmail interface{
+		SendMailWithHTMLTemplate(ctx context.Context, param GmailServiceBody, templatePath string) (bool, error)
+	}
 
 	gmailImpl struct {
 		client *gmail.Service

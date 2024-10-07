@@ -11,6 +11,31 @@ import (
 )
 
 func (s *ServiceImpl) TestParsingToken(ctx context.Context, eventId string) (*oauth2.Token, error) {
+	// token, err := s.eventService.GetBlasterToken(ctx, eventId)
+
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// tokenSource := s.oauthGmail.GetTokenSource(ctx, token)
+
+	// gmailClient := gmail.NewClient(ctx, tokenSource)
+
+	// gmailClient.SendMailWithHTMLTemplate(ctx, gmail.GmailServiceBody{
+	// 	To: "abdulaziz@bangunindo.com",
+	// 	SenderName : "Google Developer Group Cloud Jakarta",
+	// 	SenderEmail: "muhammadabdulazizalghofari",
+	// 	SubjectData : "Confirmation Payment Email",
+	// 	TempaletData : map[string] {
+	// 		"Name": "Razan",
+	// 		"EventName": "DevFest Cloud Jakarta 2024",
+	// 		"TicketPrice": 50000,
+	// 		"PaymentDeadline": 48,
+	// 		"QRISUrl": "https://api.midtrans",
+
+	// 	}
+	// })
+
 	return s.eventService.GetBlasterToken(ctx, eventId)
 }
 

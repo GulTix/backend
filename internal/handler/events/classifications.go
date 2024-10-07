@@ -8,16 +8,6 @@ import (
 	"net/http"
 )
 
-// CreateClassification godoc
-// @Summary Create a classification
-// @Description Create a classification
-// @Tags Events
-// @Accept json
-// @Produce json
-// @Param id path string true "Event ID"
-// @Param body body classifications.CreateBody true "Create Classification"
-// @Router /v1/events/{id}/classifications/ [post]
-// @Security ApiKeyAuth
 func (h *HandlerImpl) CreateClassification(w http.ResponseWriter, r *http.Request) {
 	var body classifications.CreateBody
 
