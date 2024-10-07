@@ -1,52 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                padding: 20px;
-            }
-            .container {
-                background-color: #ffffff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-            h1 {
-                color: #333333;
-            }
-            p {
-                font-size: 16px;
-                color: #666666;
-            }
-            .button {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #4caf50;
-                color: white;
-                text-align: center;
-                border-radius: 5px;
-                text-decoration: none;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Hello {{.Name}},</h1>
-            <p>Thank you for registering for {{.EventName}}</p>
-            <p>
-                You wil be confirm as Participant by Paying the Ticket for
-                {{.TicketName}} in 48 hours:
-            </p>
-            <p>Here are the detailed QRIS for this Ticket:</p>
-            <img
-                src="{{.QRISUrl}}"
-                alt="QRIS"
-                style="width: 200px; height: 200px"
-            />
-            <p>Best regards,</p>
-            <p>Google Developer Group Cloud Jakarta</p>
-        </div>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @font-face {
+        font-family: "Google Sans";
+        src: url("https://github.com/hprobotic/Google-Sans-Font/raw/refs/heads/master/GoogleSans-Regular.ttf")
+          format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Google Sans";
+        src: url("https://github.com/hprobotic/Google-Sans-Font/raw/refs/heads/master/GoogleSans-Bold.ttf")
+          format("truetype");
+        font-weight: bold;
+        font-style: normal;
+      }
+      body {
+        font-family: "Google Sans", Arial, sans-serif;
+        background-color: #f1f3f4;
+        padding: 20px;
+        margin: 0;
+      }
+      .container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        border: 3px solid black;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .header {
+        width: 100%;
+        max-width: 600px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        color: #4285f4;
+        font-weight: bold;
+      }
+      p {
+        font-size: 16px;
+        color: #333333;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #34a853;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .qris {
+        width: 200px;
+        height: 200px;
+        display: block;
+        margin: 20px auto;
+      }
+      .footer {
+        margin-top: 20px;
+        border-top: 1px solid #faab00;
+        padding-top: 20px;
+        color: #ea4336;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      src="https://developers.google.com/static/community/devfest/images/header-banner.png"
+      alt="DevFest Header"
+      class="header"
+    />
+    <div class="container">
+      <h1>Hello {{.Name}},</h1>
+      <p>
+        Congratulations! You've been selected as a participant for
+        <strong>{{.EventName}}</strong> in the
+        <strong>{{.TicketName}}</strong> ticket.
+      </p>
+      <p>To secure your seat, please follow these steps:</p>
+      <ol>
+        <li>Scan the QRIS code below</li>
+        <li>
+          Pay the amount of <span class="highlight">{{.TicketPrice}}</span> for
+          your <strong>{{.TicketName}}</strong> ticket
+        </li>
+        <li>
+          Complete the payment within
+          <span class="highlight">{{.PaymentDeadline}} hours</span>
+        </li>
+      </ol>
+      <p>Here's your personalized QRIS code for payment:</p>
+      <img src="{{.QRISUrl}}" alt="QRIS Payment Code" class="qris" />
+      <p class="highlight" style="text-align: center">
+        Payment Deadline: {{.PaymentDeadlineDate}}
+      </p>
+      <p>
+        Don't miss this opportunity to be part of {{.EventName}}! If you have
+        any questions, please don't hesitate to contact us at
+        <a href="https://instagram.com/gdgcloudjakarta">@gdgcloudjakarta</a>
+      </p>
+      <div class="footer">
+        <p>Best regards,</p>
+        <p><strong>Google Developer Groups Cloud Jakarta</strong></p>
+      </div>
+    </div>
+  </body>
 </html>
