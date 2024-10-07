@@ -23,6 +23,8 @@ func InitV1Router(h *handler.Handlers) http.Handler {
 	mux.HandleFunc("GET /tickets", h.Ticket.FindAll)
 	mux.HandleFunc("POST /tickets", h.Ticket.Create)
 
+	mux.HandleFunc("GET /classifications", h.Class.Create)
+
 	mux.Handle("/auth/", auth.InitRouter(h))
 	mux.Handle("/forms/", forms.InitRouter(h))
 	mux.Handle("/events/", events.InitRouter(h))
