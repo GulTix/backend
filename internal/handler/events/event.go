@@ -18,7 +18,7 @@ import (
 // @Produce json
 // @Param body body events.CreateBody true "Create Body"
 // @Success 201 {object} events.CreateResponse
-// @Router /v1/events/ [post]
+// @Router /v1/events [post]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	var (
@@ -57,7 +57,7 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 // @Tags Events
 // @Accept json
 // @Produce json
-// @Router /v1/events/ [get]
+// @Router /v1/events [get]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) FindAll(w http.ResponseWriter, r *http.Request) {
 	res, err := h.eventService.FindAll(r.Context())
@@ -76,9 +76,9 @@ func (h *HandlerImpl) FindAll(w http.ResponseWriter, r *http.Request) {
 // @Tags Events
 // @Accept json
 // @Produce json
-// @Param id path string true "Event ID"
+// @Param id query string true "Event ID"
 // @Param code query string true "Google Code"
-// @Router /v1/events/{id}/callback/ [put]
+// @Router /v1/events/token/callback [put]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) SetGoogleToken(w http.ResponseWriter, r *http.Request) {
 	var (
@@ -86,7 +86,7 @@ func (h *HandlerImpl) SetGoogleToken(w http.ResponseWriter, r *http.Request) {
 		code    string
 	)
 
-	eventId = r.PathValue("id")
+	eventId = r.URL.Query().Get("event_id")
 	code = r.URL.Query().Get("code")
 
 	log.Println(eventId)
@@ -109,7 +109,7 @@ func (h *HandlerImpl) SetGoogleToken(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Event ID"
-// @Router /v1/events/{id}/login/ [get]
+// @Router /v1/events/token/login [get]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) GoogleLogin(w http.ResponseWriter, r *http.Request) {
 	url := h.eventService.GetGoogleLoginURL()

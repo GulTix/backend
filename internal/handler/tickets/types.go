@@ -9,6 +9,7 @@ import (
 type (
 	Handler interface {
 		Create(w http.ResponseWriter, r *http.Request)
+		FindAll(w http.ResponseWriter, r *http.Request)
 	}
 
 	HandlerImpl struct {
