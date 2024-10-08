@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
 	"os"
 
@@ -9,8 +10,8 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
-func ConnectDB(ctx context.Context, connectionString string) *pgx.Conn {
-	conn, err := pgx.Connect(ctx, connectionString)
+func ConnectDB(ctx context.Context, connectionString string) *pgxpool.Pool {
+	conn, err := pgxpool.New(ctx, connectionString)
 
 	if err != nil {
 		log.Printf("Unable to to connect to database %+v\n", err)

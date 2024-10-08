@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -15,6 +16,6 @@ type (
 	}
 
 	dbImpl struct {
-		client *pgx.Conn
+		client *pgxpool.Pool
 	}
 )
