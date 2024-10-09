@@ -3,6 +3,7 @@ package main
 import "backend/internal/app"
 
 // @title						GulTix API
+// @version					2.0
 //
 //	@securityDefinitions.apikey	ApiKeyAuth
 //	@in							header
