@@ -17,7 +17,7 @@ import (
 // @Produce json
 // @Param body body answers.CreateBody true "Create Body"
 // @Success 201 {object} answers.CreateResponse
-// @Router /v1/forms/answers/ [post]
+// @Router /v1/forms/answers [post]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	var (
@@ -57,6 +57,10 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	response.SetRawResponse(w, http.StatusCreated, res)
 	return
 }
+
+//func (h *HandlerImpl) Creates(w http.ReponseWriter, r *http.Request) {
+//	var body answers.CreateBodyBulk
+//}
 
 // Get All Answers godoc
 // @Summary Get All Answers

@@ -46,6 +46,7 @@ func InitHttp() *Server {
 	connetionString := os.Getenv("DATABASE_URL")
 
 	db := database.NewDB(ctx, connetionString)
+
 	oauthLoginClient := oauth_pkg.NewClient([]string{
 		"https://www.googleapis.com/auth/userinfo.email",
 	})
