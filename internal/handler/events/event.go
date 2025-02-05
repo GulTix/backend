@@ -59,6 +59,7 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Router /v1/events [get]
 // @Security ApiKeyAuth
+// @Success 200 {object} events.FindAllResponse
 func (h *HandlerImpl) FindAll(w http.ResponseWriter, r *http.Request) {
 	res, err := h.eventService.FindAll(r.Context())
 

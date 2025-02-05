@@ -1,18 +1,18 @@
 package migrations
 
 import (
+	"backend/pkg/config"
 	"log"
-	"os"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-func Migrate() {
+func Migrate(config config.Config) {
 	m, err := migrate.New(
 		"file://pkg/migrations/query",
-		os.Getenv("DATABASE_URL"),
+		config.DBConnectionString,
 	)
 
 	if err != nil {

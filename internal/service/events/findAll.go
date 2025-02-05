@@ -3,11 +3,13 @@ package events
 import (
 	"backend/internal/entity"
 	"context"
+	"net/http"
 )
 
 func (s *serviceImpl) FindAll(ctx context.Context) (*FindAllResponse, error) {
 	var (
-		events []entity.Event
+		events     []entity.Event
+		statusCode int = http.StatusOK
 	)
 
 	events, err := s.repo.FindAll(ctx)
@@ -16,10 +18,15 @@ func (s *serviceImpl) FindAll(ctx context.Context) (*FindAllResponse, error) {
 		return nil, err
 	}
 
+	if len(events) == 0 {
+		statusCode = http.StatusNotFound
+	}
+
 	return &FindAllResponse{
-		Success: true,
-		Message: "Ini data data event nya ya",
-		Data:    events,
+		StatusCode: statusCode,
+		Success:    true,
+		Message:    "Ini data data event nya ya",
+		Data:       events,
 	}, nil
 
 }

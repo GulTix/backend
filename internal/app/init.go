@@ -30,8 +30,10 @@ import (
 	volunteerRepository "backend/internal/repository/volunteers"
 
 	oauth "backend/internal/service/oauth"
+	"backend/pkg/config"
 	"backend/pkg/database"
 	"backend/pkg/midtrans"
+	"backend/pkg/migrations"
 	oauth_pkg "backend/pkg/oauth"
 	"context"
 	"os"
@@ -42,8 +44,14 @@ import (
 func InitHttp() *Server {
 	_ = godotenv.Load(".env")
 
+	// Initialize Config
+	config := config.InitConfig()
+
+	// Running Migrations
+	migrations.Migrate(config)
+
 	ctx := context.Background()
-	connetionString := os.Getenv("DATABASE_URL")
+	connetionString := config.DBConnectionString
 
 	db := database.NewDB(ctx, connetionString)
 
@@ -51,11 +59,7 @@ func InitHttp() *Server {
 		"https://www.googleapis.com/auth/userinfo.email",
 	})
 
-	midtransClient := midtrans.NewMidtrans(
-		os.Getenv("MIDTRANS_SERVER_KEY"),
-		os.Getenv("ENV"),
-		os.Getenv("BASE_URL")+"/v1/payments/callback/",
-	)
+	midtransClient := midtrans.NewMidtrans(config)
 
 	oauthBlasterClient := oauth_pkg.NewClient([]string{
 		"https://www.googleapis.com/auth/gmail.send",

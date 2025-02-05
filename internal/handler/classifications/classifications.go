@@ -44,3 +44,25 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 
 	response.SetRawResponse(w, resp.StatusCode, resp)
 }
+
+// FindAll godoc
+// @Summary Find all classifications
+// @Description Find all classifications
+// @Tags Classifications
+// @Produce json
+// @Param eventId query string true "Event ID"
+// @Router /v1/classifications [get]
+// @Security ApiKeyAuth
+// @Success 200 {object} classifications.FindAllResponse
+func (h *HandlerImpl) FindAll(w http.ResponseWriter, r *http.Request) {
+	eventId := r.URL.Query().Get("eventId")
+
+	resp, err := h.classService.FindAll(r.Context(), eventId)
+
+	if err != nil {
+		response.ReturnInternalServerError(w, err)
+		return
+	}
+
+	response.SetRawResponse(w, resp.StatusCode, resp)
+}

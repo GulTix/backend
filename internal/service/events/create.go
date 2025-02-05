@@ -4,6 +4,7 @@ import (
 	"backend/internal/entity"
 	"context"
 	"log"
+	"net/http"
 
 	"github.com/google/uuid"
 )
@@ -29,8 +30,9 @@ func (s *serviceImpl) Create(ctx context.Context, body CreateBody) (*CreateRespo
 	log.Print("Masuk")
 
 	return &CreateResponse{
-		Success: true,
-		Message: "Event berhasil dibuat",
-		Data:    *event,
+		StatusCode: http.StatusCreated,
+		Success:    true,
+		Message:    "Event berhasil dibuat",
+		Data:       *event,
 	}, nil
 }

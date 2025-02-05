@@ -2,7 +2,8 @@ package app
 
 import (
 	_ "backend/docs"
-	"backend/pkg/migrations"
+	"backend/pkg/config"
+	"fmt"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 
@@ -10,7 +11,6 @@ import (
 	"backend/internal/router"
 	"log"
 	"net/http"
-	"os"
 )
 
 func NewServer(handlers *handler.Handlers) *Server {
@@ -20,9 +20,8 @@ func NewServer(handlers *handler.Handlers) *Server {
 }
 
 func (s *Server) InitRouteAndServe() {
+	config := config.InitConfig()
 	mux := http.NewServeMux()
-
-	migrations.Migrate()
 
 	// mux.HandleFunc("/", s.handler.Auth.ReturnHelloWorld)
 
@@ -32,12 +31,8 @@ func (s *Server) InitRouteAndServe() {
 
 	mux.Handle("/docs/*", httpSwagger.Handler())
 
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		port = "8080"
-	}
+	port := config.Port
 
 	log.Printf("Server is running on port %s\n", port)
-	http.ListenAndServe(":"+port, mux)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), mux)
 }

@@ -16,7 +16,7 @@ import (
 // @Produce json
 // @Param body body tickets.CreateBody true "Create Body"
 // @Success 201 {object} tickets.CreateResponse
-// @Router /v1/tickets/ [post]
+// @Router /v1/tickets [post]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 	var body tickets.CreateBody
@@ -50,14 +50,14 @@ func (h *HandlerImpl) Create(w http.ResponseWriter, r *http.Request) {
 // Get All Ticket Types godoc
 // @Summary Get All Ticket Types
 // @Description Get All Ticket Types
-// @Param id path string true "Event ID"
-// @Tags Events
+// @Param event_id query string true "Event ID"
+// @Tags Tickets
 // @Accept json
 // @Produce json
-// @Router /v1/events/{id}/tickets/ [get]
+// @Router /v1/tickets [get]
 // @Security ApiKeyAuth
 func (h *HandlerImpl) FindAll(w http.ResponseWriter, r *http.Request) {
-	eventId := r.PathValue("id")
+	eventId := r.URL.Query().Get("event_id")
 
 	res, err := h.ticketTypeService.FindByEventIdResponse(r.Context(), eventId)
 

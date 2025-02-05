@@ -14,6 +14,7 @@ type (
 		FindAll(ctx context.Context) ([]entity.Event, error)
 		UpdateToken(ctx context.Context, token []byte, eventId string) error
 		GetBlasterToken(ctx context.Context, eventId string) (*oauth2.Token, error)
+		Delete(ctx context.Context, eventId string) (*entity.Event, error)
 		// FindAllByVolunteerId(ctx context.Context, volunteerId string) ([]entity.Event, error)
 	}
 
