@@ -27,3 +27,5 @@ go.work.sum
 /docs
 
 main
+
+.DS_Store
