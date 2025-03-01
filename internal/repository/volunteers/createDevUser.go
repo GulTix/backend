@@ -38,12 +38,12 @@ func (r *RepositoryImpl) CreateDevVolunteer(ctx context.Context) error {
 			Deleted:  false,
 		},
 		entity.Volunteer{
-			Id: uuid.NewString(),
+			Id:       uuid.NewString(),
 			Username: "jeeehaan",
-			Email: "jessyhanifiah@gmail.com",
-			Role: "ADMIN",
-			Deleted: false,
-		}
+			Email:    "jessyhanifiah@gmail.com",
+			Role:     "ADMIN",
+			Deleted:  false,
+		},
 	)
 
 	query := `INSERT INTO volunteers (id, username, email, role, deleted) VALUES
